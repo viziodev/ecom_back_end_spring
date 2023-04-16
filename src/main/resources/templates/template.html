@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+>
+<head>
+    <meta charset="UTF-8">
+     <link rel="stylesheet"
+           href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+  <script
+          src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.js">
+  </script>
+
+  <title>Gestion des Approvisionneents</title>
+</head>
+<body>
+<div class="container ">
+  <nav class="navbar navbar-expand-lg navbar-light bg-primary my-1"
+       sec:authorize="isAuthenticated()">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white" th:href="@{/liste-all-cmde}">Gestion des Approvisionnement</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          <li class="nav-item" sec:authorize="hasAuthority('Admin')">
+            <a class="nav-link text-white" th:href="@{/liste-all-cmde}">Commande</a>
+          </li>
+          <li class="nav-item" sec:authorize="hasAuthority('Admin')">
+            <a class="nav-link active text-white" aria-current="page"  th:href="@{/client/liste-clients}" >Clients</a>
+          </li>
+
+
+        </ul>
+        <ul class="navbar-nav  mb-2 mb-lg-0">
+          <li class="nav-item float-end" >
+            <a class="nav-link text-white text-capitalize" aria-current="page"   >
+              <span th:remove="tag"  sec:authentication="name"></span>
+            </a>
+          </li>
+        </ul>
+        <form class="d-flex" method="post" th:action="@{/logout}">
+          <button class="btn btn-primary text-white " type="submit">Deconnexion</button>
+        </form>
+
+      </div>
+    </div>
+  </nav>
+</div>
+<section  layout:fragment="contentForView">
+
+</section>
+
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+>
+<head>
+    <meta charset="UTF-8">
+
+    <title>Title</title>
+</head>
+<body>
+<div class="container" layout:fragment="contentForView">
+<div class="card mt-2">
+    <div class="card-header">
+       <h5>Liste des Clients</h5>
+    </div>
+    <div class="card-body">
+        <div class="float-end" sec:authorize="hasAuthority('Admin')">
+            <a th:href="@{/admin/form-client}" class="btn btn-outline-info"> Nouveau</a>
+        </div>
+        <br>
+        <form class="d-flex my-2 w-50" method="get"
+        th:action="@{/client/liste-clients}">
+            <input class="form-control me-2"
+                   name="keyword"
+                   th:value="${keyword}"
+                   type="search" placeholder="Taper un Numero Telephone" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">OK</button>
+        </form>
+   <table class="table table-bordered">
+       <thead>
+          <tr>
+              <th>Nom et Prenom</th>
+              <th>Telephone</th>
+              <th>Adresse</th>
+              <th>Action</th>
+          </tr>
+       </thead>
+       <tbody>
+           <tr th:each="cl:${listClients}">
+               <td th:text="${cl.nomComplet}"></td>
+               <td th:text="${cl.telephone}"></td>
+               <td th:text="${cl.adresse}"></td>
+               <td ><a type="button" class="btn btn-sm btn-outline-success"
+                       th:href="@{/liste-cmde-client(id=${cl.id})}"
+               >Mes Commandes</a>
+                   <a sec:authorize="hasAuthority('Admin')" type="button" class="btn btn-sm btn-outline-warning"
+                      th:href="@{/form-add-cmde-client(id=${cl.id})}"
+                   >Nouvelle Commande</a>
+               </td>
+           </tr>
+       </tbody>
+   </table>
+        <nav aria-label="Page navigation example mt-1">
+            <ul class="pagination float-end">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item" th:each="page,current:${pages}">
+                    <a
+                             th:class="${currentPage==current.index ? 'page-link active': 'page-link'}"
+                             th:text="${current.index+1}"
+                th:href="@{client/liste-clients(page=${current.index},keyword=${keyword})}"></a></li>
+
+                <li class="page-item"><a class="page-link" href="#" >Next</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</div>
+</div>
+</body>
+</html>

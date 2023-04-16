@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+<div class="container " layout:fragment="contentForView">
+
+<div class="card mt-2">
+    <div class="card-header">
+       <h5>Enregistrer Commande </h5>
+    </div>
+    <div class="card-body">
+        <form
+              class="offset-1 my-2"
+              th:action="@{/change-etat-commande}"
+              method="get">
+            <div class="row">
+                <div class="col">
+                    <select
+                            name="etat"
+                            class="form-select" aria-label="Default select example">
+                            <option value="1">Terminer</option>
+                            <option value="2">Facturer</option>
+                            <option value="3">Payer</option>
+                        <option></option>
+                    </select>
+                </div>
+                <div class="col">
+                    <button class="btn btn-outline-success" type="submit">Valider</button>
+                </div>
+                <input type="hidden" name="idCommande" th:value="${commande.id}">
+            </div>
+
+        </form>
+        <div class="card col-md-10 offset-1 my-2">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col">
+                        <input
+                                readonly
+                                th:value="${commande.client.nomComplet}"
+                                type="text" class="form-control"  aria-label="First name">
+                    </div>
+                    <div class="col">
+                        <input
+                                th:value="${commande.client.telephone}"
+                                readonly
+                                type="text" class="form-control"  aria-label="Last name">
+                    </div>
+                    <div class="col">
+                        <input
+                                th:value="${commande.client.adresse}"
+                                readonly
+                                type="text" class="form-control"  aria-label="Last name">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card col-md-10 offset-1 my-2">
+            <div class="card-body">
+                <h5 class="my-3">Les Articles de la Commande</h5>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Article</th>
+                        <th>Prix</th>
+                        <th>Qte</th>
+                        <th>Montant</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="ligneCmde:${commande.ligneCommandes}">
+                        <td th:text="${ligneCmde.article.libelle}"></td>
+                        <td th:text="${ligneCmde.prix}"></td>
+                        <td th:text="${ligneCmde.quantite}"></td>
+                        <td th:text="${ligneCmde.montant}"></td>
+                    </tr>
+                    </tbody>
+
+                </table>
+
+                <div class="row ">
+                    <div class="col ">
+                        <button type="button" class="btn btn-info fs-5 float-end">
+                            Total <span class="badge  text-white fs-4 font-monospace"
+                                        th:text="${commande.montant}"
+                        ></span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+</body>
+</html>
