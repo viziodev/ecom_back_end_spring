@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SecurityServiceImpl implements SecurityService{
+public class SecurityServiceRestImpl implements SecurityService{
     @Autowired
     ClientRepository clientRepository;
     @Override
-    public ClientDto getClientByLogin(String login) {
-      Client client =(Client) clientRepository.findByUsername(login);
-           return new ClientDto(client);
+    public Client getClientByLogin(String login) {
+          Client client =(Client) clientRepository.findByUsername(login);
+             return client;
     }
 
     @Override

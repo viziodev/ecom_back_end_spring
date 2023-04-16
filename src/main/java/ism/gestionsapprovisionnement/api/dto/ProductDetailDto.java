@@ -1,4 +1,14 @@
 package ism.gestionsapprovisionnement.api.dto;
 
-public class ProductDetail {
+import lombok.*;
+
+import java.util.List;
+@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProductDetailDto {
+    ProductDto product;
+    List<ProductDto> products;
 }

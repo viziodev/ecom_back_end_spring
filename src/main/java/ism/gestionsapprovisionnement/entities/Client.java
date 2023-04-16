@@ -28,6 +28,9 @@ public class Client extends AppUser {
         this.adresse = adresse;
     }
 
+
+
+
     @Embedded
     private Adresse adresse;
 
